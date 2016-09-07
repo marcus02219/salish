@@ -25,7 +25,7 @@ class HomeController < ApplicationController
     user = User.new(email:email, password:params[:password])
     if user.save
       if sign_in(:user, user)
-        render :json => {status: 1, :data => user.authentication_token}
+        render :json => {status: 1, :data => user.info_by_json}
       else
         render json: {status: 0, :data => 'Can not create account'}
       end

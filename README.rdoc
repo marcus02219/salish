@@ -10,8 +10,8 @@
       password:       String *required minimum 6
 
       curl \
-        -F "email=tester2@email.com" \
-        -F "password=tester2" \
+        -F "email=marcus02219@gmail.com" \
+        -F "password=asdfasdf" \
         http://localhost:3000/api/v1/accounts/create
       results:
       {"status": 1, "data":"zqTgTKo7WJGgnFxDTRVN"}

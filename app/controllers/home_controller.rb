@@ -24,11 +24,12 @@ class HomeController < ApplicationController
     end
     user = User.new(email:email, password:params[:password])
     if user.save
-      if sign_in(:user, user)
-        render :json => {status: 1, :data => user.info_by_json}
-      else
-        render json: {status: 0, :data => 'Can not create account'}
-      end
+      # if sign_in(:user, user)
+      #   render :json => {status: 1, :data => "Please confirm your email"}
+      # else
+      #   render json: {status: 0, :data => 'Can not create account'}
+      # end
+      render :json => {status: 1, :data => "Please confirm your email"}
     else
       render :json => {status: 0, :data => user.errors.messages}
     end
@@ -60,9 +61,6 @@ class HomeController < ApplicationController
   # results:
   #   return user_info
   def create_session
-    if params[:social]
-      social_sign_in(params)
-    end
     email    = params[:email]
     password = params[:password]
 
@@ -72,12 +70,20 @@ class HomeController < ApplicationController
     else
       if resource.valid_password?( password )
         user = sign_in( :user, resource )
-        render :json => {status: 1, :data => resource.info_by_json}
+        unless resource.confirmed?
+          render :json => {status: 0, :data => "Please confirm your email"}
         else
-          render :json => {status: 0,  data: "Password is wrong"}
+          if resource.approved?
+            render :json => {status: 1, :data => resource.info_by_json}
+          else
+            render :json => {status: 0, :data => "You have not approved"}
+          end
         end
+      else
+        render :json => {status: 0,  data: "Password is wrong"}
       end
-   end
+    end
+  end
 
   #  LogOut API
   #  POST: /api/v1/accounts/sign_out

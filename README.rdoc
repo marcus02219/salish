@@ -10,7 +10,7 @@
       password:       String *required minimum 6
 
       curl \
-        -F "email=marcus02219@gmail.com" \
+        -F "email=tester2@gmail.com" \
         -F "password=asdfasdf" \
         http://localhost:3000/api/v1/accounts/create
       results:
@@ -37,8 +37,8 @@
     results:
 
     curl \
-      -F "email=tester2@email.com" \
-      -F "password=12341234" \
+      -F "email=tester1@gmail.com" \
+      -F "password=asdfasdf" \
       http://localhost:3000/api/v1/accounts/sign_in
 
 ==== Sign Out
